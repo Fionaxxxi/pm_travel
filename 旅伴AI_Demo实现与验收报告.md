@@ -231,6 +231,44 @@ npm run dev
 限制：地图仍依赖 OpenStreetMap 在线底图；数据、坐标、景点及解说是虚构样例；交通耗时为演示矩阵。真实地点、导航路况、模型生成、账号/多用户、并发数据库和公网部署不属于 V2.2，也未添加。自动测试由同一实施者执行，不是独立人员验收。截图归档由项目所有者于 2026-11-21 明确豁免，不列为阶段阻断项；此前截图导出曾被浏览器安全策略拒绝，未尝试规避。普通模式动效现已恢复并通过浏览器计算样式复核。此前尝试从 Windows 界面读取动画偏好未获计算机使用授权；项目所有者随后明确豁免 Windows 减少动态效果模式的实机切换。`prefers-reduced-motion` CSS 已保留，但该系统模式未实机验证。景点字段其它非法边界由接口回归覆盖，没有逐一 GUI 输入；日期与预算极限组合没有穷举。瓦片错误分支仅以不可达端口模拟单请求失败，不把它表述成全机断网。前端构建、契约检查和后端回归通过不等于独立人员验收。
 
 **阶段结论：**原型前端整合实施已按项目所有者确认的验收范围交付。计划内五页、核心用户闭环、失败与恢复路径、窄屏布局、管理表单、普通模式原型动效与自动检查均有对应观察或证据；截图归档和 Windows 减少动态效果偏好切换为所有者明确豁免项，不作为已测试通过。后续阶段可从同一 Vue/FastAPI 演示版本继续。
+### 10.11 大模型解说试接入与验收（2026-11-21）
+
+**目标和边界。** 主计划 V2.2 的 WP5 允许景点解说使用可配置模型，同时要求无模型时回退预置内容。本轮仅试接入「地点解说」；推荐、路线排程、途中调整、反馈和 JSON 持久化仍由本机业务规则处理。模型没有路线控制权，也不会收到完整行程。
+
+**实际能力与入口。** 景点卡或时间轴的「地点解说」继续调用原有 `POST /api/guide`。当前模式由后端 `GUIDE_MODE` 选择：默认 `preset`；设为 `llm` 时后端从进程环境读取 DeepSeek API 凭据并调用官方 OpenAI 兼容 Chat Completions API，默认模型为 `deepseek-flash`。API 基址与模型可通过 `LLM_BASE_URL`、`LLM_MODEL` 覆盖。界面在请求前提示发送范围；生成成功时来源提示标为 AI，模型失败、缺少配置或空响应时返回本机预置解说，并将 `sourceMode` 标为 `preset`、`degraded=true`。配置方式及依赖关系见[本阶段实施计划](D:/pm/旅伴AI_LLM解说试接入实施计划.md)。
+
+贯穿示例为打开「独克宗古城」的简短解说。后端仅发送该景点的名称、分类、标签、知识文字、开放时间、门票、建议停留时间、来源标题，以及当前最强兴趣类别、解说深度与可用分钟数；不发送行程、准确位置、完整偏好或其他景点。资料文本被明确作为不可信数据处理，模型不得执行其中的指令，也不得补造资料未载明的年代和事实。请求有 20 秒超时，单次不流式；模型结果不持久化。
+
+```mermaid
+flowchart LR
+  UI[解说弹窗与范围提示] --> API[POST /api/guide]
+  API --> GUIDE[guide.py：资料限制/超时/API 调用]
+  GUIDE -->|成功| AI[DeepSeek 生成文本]
+  GUIDE -->|缺配置或失败| PRE[预置解说]
+  AI --> R[现有 Guide 响应格式]
+  PRE --> R
+  R --> UI
+  API -.行程/路线.-> NONE[不交给模型]
+```
+
+**核心实现与失败行为。** 新增 [guide.py](D:/pm/backend/app/guide.py) 负责构造最小提示内容、调用 HTTP API、校验纯文本并隐藏密钥；[main.py](D:/pm/backend/app/main.py) 选择生成或既有预置文本，并继续返回契约既有字段；[run.ps1](D:/pm/backend/run.ps1) 保留默认 preset，但不再覆盖运行者明确指定的模式；[App.vue](D:/pm/frontend/src/App.vue) 在解说前说明云端发送范围。后端 `.env.example` 仅含配置说明和空值，没有真实密钥。模型的 HTTP 状态与异常类别可在后端日志诊断；请求正文、响应正文与密钥不写日志。
+
+```python
+generated, model = await guide_service.generate(attraction, strongest, depth, body["availableMinutes"])
+if generated:
+    source_mode, degraded = "llm", False
+else:
+    source_mode, degraded = "preset", guide_mode == "llm"
+```
+
+**操作方式。** UI 步骤：进入「我的旅程」→打开任一景点的「地点解说」→选简短或详细。Operator 步骤：在启动后端的同一个 PowerShell 进程里设置 `GUIDE_MODE=llm`，并提供 `DEEPSEEK_API_KEY`；若换供应商则同时配置对应的 `LLM_BASE_URL`、`LLM_MODEL` 与 `LLM_API_KEY`，然后按 [run.ps1](D:/pm/backend/run.ps1) 启动。默认不设置 LLM 模式时继续用本机预置内容。不能将密钥写入项目文件或前端环境变量。
+
+**验证结果与保留的失败。** `D:\miniconda3\envs\pm` 下新增解说边界测试为 3 passed，`py_compile` 通过；Vite 构建通过（1620 个模块），OpenAPI/样例结构检查 312 项通过。早先的异步 pytest 写法在无 pytest-asyncio 插件的环境中被跳过，改用同步边界测试后通过。此次全量既有后端回归停在首个 `TestClient` 健康检查且超过等待时间没有输出，人工停止；不能声称全量回归已通过。
+
+试用实例以隔离数据在 8032/5192 启动，服务健康检查和前端首页均为 HTTP 200；两次实际 `POST /api/guide` 都返回 HTTP 200，但正文是预置回退。安全诊断确认 DeepSeek 返回 HTTP 402；官方文档将其定义为“余额不足”。因此真正的模型生成验收 A5 未通过，本轮没有展示 AI 生成的景点内容；没有继续请求或充值。真实响应及日志见 [试用证据目录](D:/pm/evidence/llm-trial/)。隔离试用服务已停止，原运行配置恢复到后端 8031。此前启动 8031/5191 时遇到端口占用，失败记录也保留在该目录。无截图、无浏览器视觉验收。
+
+阶段结论：**模型接入代码、脱敏、提示范围和预置回退已完成；真实模型正文仍待账户余额可用后补验。** 供应商对话接口已按官方文档配置为 `https://api.deepseek.com/chat/completions`、模型名 `deepseek-flash`；相关官方文档：[Chat Completions API](https://api-docs.deepseek.com/api/create-chat-completion/)、[中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。该实现不构成旅游事实核验，也不改变现阶段默认 preset 的设置。
+
 ### 10.1 目标与实现前后
 
 本阶段依照当前权威计划 [《旅伴 AI 功能演示 Demo 实现计划》](D:/pm/旅伴AI_MVP实现计划.md) V2.2 执行。旧的完整 MVP 计划已由 V2.2 收缩取代。本阶段目标是让用户可在一台电脑上连续操作“设置偏好—看推荐—生成路线—途中变化—接受或放弃调整—听/看解说—反馈—再次推荐”的可运行演示；不是上线级服务，也不是接入真实大模型的产品。

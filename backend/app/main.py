@@ -18,7 +18,7 @@ from pydantic import TypeAdapter, ValidationError
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
-from . import engine, storage
+from . import engine, guide as guide_service, storage
 
 ROOT = Path(__file__).resolve().parents[2]
 LOGGER = logging.getLogger("travelmate")
@@ -363,10 +363,18 @@ async def guide(request: Request):
     interests = state["profile"]["interests"]
     strongest = max(engine.TAGS, key=lambda t: (interests[t], -engine.TAGS.index(t)))
     text = attraction["presetGuides"][strongest][depth]
-    guide_mode = os.environ.get("GUIDE_MODE", "preset").lower()
-    degraded = guide_mode == "llm"  # Model access is deliberately disabled in this demo build.
-    notice = "当前使用预置解说，未连接真实模型。" if degraded else "预置解说依据原型内置资料整理；资料未作外部核验。"
-    return _success({"attractionId": attraction["id"], "depth": body["depth"], "effectiveDepth": depth, "text": text, "sources": attraction["sources"], "sourceMode": "preset", "degraded": degraded, "notice": notice})
+    guide_mode = os.environ.get("GUIDE_MODE", "preset").strip().lower()
+    generated, model = await guide_service.generate(attraction, strongest, depth, body["availableMinutes"]) if guide_mode == "llm" else (None, None)
+    if generated:
+        text = generated
+        source_mode = "llm"
+        degraded = False
+        notice = f"AI 生成内容（{model}），仅依据景点资料整理；资料与事实尚未独立核验。"
+    else:
+        source_mode = "preset"
+        degraded = guide_mode == "llm"
+        notice = "模型暂不可用，已回退到预置解说；资料依据原型内置内容，尚未外部核验。" if degraded else "当前使用预置解说；资料依据原型内置内容，尚未外部核验。"
+    return _success({"attractionId": attraction["id"], "depth": body["depth"], "effectiveDepth": depth, "text": text, "sources": attraction["sources"], "sourceMode": source_mode, "degraded": degraded, "notice": notice})
 
 
 @app.post("/api/nearby")

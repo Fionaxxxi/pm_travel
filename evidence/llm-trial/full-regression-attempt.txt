@@ -1,0 +1,7 @@
+2026-11-21
+
+Command: D:\miniconda3\envs\pm\python.exe -m pytest backend/tests -vv -s
+Observed: pytest collected 22 tests, then remained at backend/tests/test_api.py::test_health_and_contract_shape with no output for more than 30 seconds.
+Action: manually interrupted the process. No pass/fail result was produced for the full suite.
+
+The three new guide boundary tests were run separately and passed. This note preserves the incomplete full-suite attempt; it is not acceptance evidence for the existing API regression suite.

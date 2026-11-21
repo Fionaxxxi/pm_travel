@@ -7,3 +7,8 @@
 14:05:06 [vite] server restarted.
 14:18:49 [vite] (client) hmr update /src/App.vue
 14:19:06 [vite] (client) hmr update /src/style.css
+14:40:59 [vite] (client) hmr update /src/App.vue
+14:54:23 [vite] .env.local changed, restarting server...
+14:54:23 [vite] server restarted.
+15:00:26 [vite] .env.local changed, restarting server...
+15:00:26 [vite] server restarted.

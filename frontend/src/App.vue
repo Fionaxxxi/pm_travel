@@ -533,6 +533,7 @@ onMounted(loadAll)
       <el-dialog v-model="guideOpen" :title="`${guideAttraction?.name || '景点'} · 地点解说`" width="min(680px, 94vw)" @close="cancelGuide">
         <img v-if="guideAttraction" class="guide-modal-photo" :src="`/images/${guidePhoto}`" :alt="`${guideAttraction.name}主题意境图`">
         <div class="guide-modal-controls"><label>解说深度<select v-model="guideSettings.depth" @change="loadGuide"><option value="short">简短</option><option value="detailed">详细</option></select></label><label>可用时间 · 分钟<input v-model.number="guideSettings.availableMinutes" type="number" min="1" max="120" @change="loadGuide"></label></div>
+        <p class="form-help">连接大模型时，只发送此景点资料、兴趣重点、解说长度和可用时间至模型服务；不会发送行程记录。AI 解说请自行核对事实。</p>
         <p v-if="guideLoading" class="form-help" role="status">正在读取景点资料… <button class="text-button" @click="cancelGuide">取消等待</button></p>
         <p v-if="guideError" class="guide-error" role="alert">{{ guideError }} <button class="text-button" @click="loadGuide">重试</button></p>
         <template v-if="guide"><p class="guide-modal-text">{{ guide.text }}</p><p class="source-note">{{ guide.notice }} <span v-for="source in guide.sources" :key="source.title">· {{ source.title }}</span></p><button class="text-button" @click="openFeedback(guideSettings.attractionId); cancelGuide()">反馈这次体验 ↗</button></template>
