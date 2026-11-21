@@ -1,0 +1,7 @@
+2026-11-21 configured provider retest
+
+Configured model: qwen4-max (provider workspace endpoint omitted from this record)
+Guide API: HTTP 200 application response, sourceMode=preset, degraded=true
+Upstream provider response: HTTP 403, code=insufficient_quota
+Generated model text: none; application returned its local preset fallback.
+API key: not recorded. No further retries were made. Trial services were stopped.

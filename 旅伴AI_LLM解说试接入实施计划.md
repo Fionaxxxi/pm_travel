@@ -96,14 +96,18 @@ flowchart LR
 ## 执行结果（2026-11-21）
 
 - WP5.1—WP5.3 已实现：DeepSeek/OpenAI 兼容 API 的配置、独立解说调用、失败回退、发送范围提示均已接入；默认仍为 preset，密钥只从进程环境读取。
-- A2（调用层 mock 成功）、A3（HTTP 503 回退信号）、无密钥配置路径的专项测试通过；生产构建和 312 项契约结构检查通过。首次写成异步 pytest 用例时，因项目环境未安装 pytest-asyncio 而跳过；改为同步 HTTP 边界测试后通过。
+- A2（调用层 mock 成功）、A3（HTTP 503 回退信号）、无密钥配置路径和 Qwen payload 参数的 4 项专项测试通过；生产构建和 312 项契约结构检查通过。首次写成异步 pytest 用例时，因项目环境未安装 pytest-asyncio 而跳过；改为同步 HTTP 边界测试后通过。
 - WP5.4/A5 **未通过**：两次短 DeepSeek 请求均返回 HTTP 402。官方错误码将 402 定义为“余额不足”；本阶段不充值，也不继续发起模型请求。因此没有真实 AI 解说正文，不能声称已完成真实模型生成验收。
 - 8031/5191 已被占用，试用临时使用 8032/5192 和隔离数据目录。真实试用服务在 402 后已停止，避免应用以后意外发起模型调用；项目原有默认地址已恢复为 8031。
 - 全量既有后端回归在当前 Conda 环境启动 `test_health_and_contract_shape` 后持续无输出，手动停止；这是未完成的验证，不能引用之前阶段的 19 项通过结果代替本阶段复测。新加的三个解说边界用例单独通过。
 - 脱敏响应和运行日志保存在 `evidence/llm-trial/`。其中没有 API key；官方 402 说明见 [DeepSeek 中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。
 
-阶段状态：**代码与回退已交付，真实模型输出待账号有可用余额后再验收**。恢复 WP5.4 前需确认供应商账户余额可用；无需改路线算法或扩大数据范围。
+阶段状态：**代码与回退已交付，真实模型输出仍未验收**。首次 DeepSeek 请求返回 HTTP 402；用户之后配置阿里云 Model Studio `qwen4-max`，实接诊断返回 HTTP 403、代码 `insufficient_quota`，仍然回退到 preset。恢复 WP5.4 前需先在供应商控制台确认模型/Key 权限、服务状态及额度；无需改路线算法或扩大数据范围。
 
 ### 配置交接补充（2026-11-21）
 
-已新增本机私有配置文件 `backend/.env`，预填 `GUIDE_MODE=llm`、DeepSeek 地址和模型名，`LLM_API_KEY` 留空；`backend/run.ps1` 现在通过 Uvicorn `--env-file` 自动加载它。`.gitignore` 已忽略 `.env`，真实密钥不会提交；`.env.example` 仍是无密钥模板。用户填入可用 API Key 后重启后端即可重试。
+已新增本机私有配置文件 `backend/.env`；`backend/run.ps1` 通过 Uvicorn `--env-file` 自动加载它。`.gitignore` 已忽略 `.env`，真实密钥不会提交；`.env.example` 仍是无密钥模板。
+
+### 用户配置后复试（2026-11-21）
+
+用户已配置阿里云 Model Studio `qwen4-max`。按其官方接口要求，生成请求使用 `enable_thinking=true`，不发送 DeepSeek 专属 `thinking` 字段；对应 payload 单元测试通过。实接请求的业务接口返回 200，但供应商返回 HTTP 403 / `insufficient_quota`，因此仍没有 AI 正文。官方建议检查服务开通、模型/Key 权限和额度：[Model Studio 错误码](https://help.aliyun.com/zh/model-studio/error-code-start)。没有继续请求；隔离服务已停止，用户 `.env` 保留且仍被 Git 忽略。脱敏诊断见 `evidence/llm-trial/configured-model-diagnostic.txt`。

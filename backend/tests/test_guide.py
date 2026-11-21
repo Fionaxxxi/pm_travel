@@ -58,3 +58,11 @@ def test_guide_without_key_does_not_configure_provider(monkeypatch: pytest.Monke
     assert guide._configuration() is None
 
 
+def test_qwen4_max_payload_uses_supported_thinking_settings() -> None:
+    payload = guide._request_payload("qwen4-max", {"name": "古城"}, "history", "short", 30)
+
+    assert payload["enable_thinking"] is True
+    assert "thinking" not in payload
+    assert payload["max_tokens"] == 2048
+
+

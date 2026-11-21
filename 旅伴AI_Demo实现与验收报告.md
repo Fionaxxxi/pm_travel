@@ -267,7 +267,13 @@ else:
 
 试用实例以隔离数据在 8032/5192 启动，服务健康检查和前端首页均为 HTTP 200；两次实际 `POST /api/guide` 都返回 HTTP 200，但正文是预置回退。安全诊断确认 DeepSeek 返回 HTTP 402；官方文档将其定义为“余额不足”。因此真正的模型生成验收 A5 未通过，本轮没有展示 AI 生成的景点内容；没有继续请求或充值。真实响应及日志见 [试用证据目录](D:/pm/evidence/llm-trial/)。隔离试用服务已停止，原运行配置恢复到后端 8031。此前启动 8031/5191 时遇到端口占用，失败记录也保留在该目录。无截图、无浏览器视觉验收。
 
-阶段结论：**模型接入代码、脱敏、提示范围和预置回退已完成；真实模型正文仍待账户余额可用后补验。** 供应商对话接口已按官方文档配置为 `https://api.deepseek.com/chat/completions`、模型名 `deepseek-flash`；相关官方文档：[Chat Completions API](https://api-docs.deepseek.com/api/create-chat-completion/)、[中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。该实现不构成旅游事实核验，也不改变现阶段默认 preset 的设置。
+阶段结论：**模型接入代码、脱敏、提示范围和预置回退已完成；真实模型正文仍未验收。** 默认 DeepSeek 接口文档：[Chat Completions API](https://api-docs.deepseek.com/api/create-chat-completion/)、[中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。该实现不构成旅游事实核验，也不改变现阶段默认 preset 的设置。
+
+#### 用户配置后复试（2026-11-21）
+
+用户在本机 `.env` 配置了阿里云 Model Studio 的 `qwen4-max`。代码按该模型接口生成请求：使用 `enable_thinking=true`，不携带 DeepSeek 专用参数；[阿里云兼容接口文档](https://help.aliyun.com/en/model-studio/qwen-api-via-openai-chat-completions)列出该模型和参数。四项解说专项测试通过，包含 Qwen payload 断言。
+
+实际短解说调用被供应商拒绝，后端安全日志读到 HTTP 403、错误代码 `insufficient_quota`；用户页面仍收到 HTTP 200 和预置解说，`sourceMode=preset`、`degraded=true`，没有真实模型正文。阿里云文档建议按服务开通、模型访问权限、Key 权限范围和额度排查：[错误码说明](https://help.aliyun.com/zh/model-studio/error-code-start)。本轮只能确认供应商拒绝请求，无法仅凭状态码断定账户余额或权限的具体原因；没有继续请求。诊断文件为 [configured-model-diagnostic.txt](D:/pm/evidence/llm-trial/configured-model-diagnostic.txt)。试用服务已停止，`backend/.env` 保留在本机并被 Git 忽略。确认控制台配置后，可运行 [run.ps1](D:/pm/backend/run.ps1) 复试。
 
 ### 10.1 目标与实现前后
 

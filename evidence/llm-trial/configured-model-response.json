@@ -1,0 +1,21 @@
+{
+  "testedAt": "2026-11-21T15:16:59",
+  "provider": "Alibaba Cloud Model Studio OpenAI-compatible",
+  "model": "qwen4-max",
+  "endpoint": "POST /api/guide",
+  "attractionId": "a01",
+  "status": "HTTP 200",
+  "sourceMode": "preset",
+  "degraded": true,
+  "notice": "模型暂不可用，已回退到预置解说；资料依据原型内置内容，尚未外部核验。",
+  "text": "独克宗古城 · 历史文化：沿着石板路走进藏式民居与街巷，观察当地聚落的空间与日常生活。",
+  "sources": [
+    {
+      "title": "用户原型内置景点资料",
+      "url": null,
+      "note": "摘自《旅伴AI-表单与曲线路线版.html》；原型未注明外部核验来源，开放时间、坐标与费用出行前请再次确认。"
+    }
+  ],
+  "apiKeyRecorded": false,
+  "frontendStatus": 200
+}

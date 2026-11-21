@@ -71,16 +71,26 @@ async def generate(attraction: dict[str, Any], interest_tag: str, depth: str, mi
     if config is None:
         return None, None
     endpoint, model, key = config
-    payload = {
-        "model": model,
-        "messages": _messages(attraction, INTEREST_NAMES.get(interest_tag, interest_tag), depth, minutes),
-        "max_tokens": 520 if depth == "short" else 900,
-        "temperature": 0.3,
-        "stream": False,
-        "thinking": {"type": "disabled"},
-    }
+    payload = _request_payload(model, attraction, interest_tag, depth, minutes)
     content = await asyncio.to_thread(_send_request, endpoint, key, payload)
     return (content, model) if content else (None, None)
+
+
+def _request_payload(model: str, attraction: dict[str, Any], interest_tag: str, depth: str, minutes: int) -> dict[str, Any]:
+    is_qwen4_max = model.lower().startswith("qwen4-max")
+    payload: dict[str, Any] = {
+        "model": model,
+        "messages": _messages(attraction, INTEREST_NAMES.get(interest_tag, interest_tag), depth, minutes),
+        "max_tokens": (2048 if depth == "short" else 3072) if is_qwen4_max else (520 if depth == "short" else 900),
+        "temperature": 0.3,
+        "stream": False,
+    }
+    if is_qwen4_max:
+        # Qwen4-Max on Model Studio requires thinking to remain enabled.
+        payload["enable_thinking"] = True
+    elif "deepseek" in model.lower():
+        payload["thinking"] = {"type": "disabled"}
+    return payload
 
 
 def _send_request(endpoint: str, key: str, payload: dict[str, Any]) -> str | None:
@@ -88,7 +98,17 @@ def _send_request(endpoint: str, key: str, payload: dict[str, Any]) -> str | Non
         with httpx.Client(timeout=httpx.Timeout(TIMEOUT_SECONDS), follow_redirects=False) as client:
             response = client.post(endpoint, json=payload, headers={"Authorization": f"Bearer {key}"})
         if response.status_code < 200 or response.status_code >= 300:
-            LOGGER.warning("Guide provider returned HTTP %s; using preset guide", response.status_code)
+            try:
+                error_body = response.json()
+                nested = error_body.get("error", {}) if isinstance(error_body, dict) else {}
+                error_code = error_body.get("code") if isinstance(error_body, dict) else None
+                error_code = error_code or (nested.get("code") if isinstance(nested, dict) else None)
+            except ValueError:
+                error_code = None
+            if isinstance(error_code, str) and error_code.replace("_", "").replace(".", "").replace("-", "").isalnum():
+                LOGGER.warning("Guide provider returned HTTP %s (%s); using preset guide", response.status_code, error_code[:64])
+            else:
+                LOGGER.warning("Guide provider returned HTTP %s; using preset guide", response.status_code)
             return None
         data = response.json()
         content = data["choices"][0]["message"]["content"]
