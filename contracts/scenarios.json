@@ -1,0 +1,159 @@
+{
+  "contractVersion": "1.0.0",
+  "operationId": "replan",
+  "usage": "具体事件请求与预期性质；待后端实现后执行，当前不代表场景已通过。",
+  "cases": [
+    {
+      "id": "delay",
+      "precondition": "status-complete",
+      "request": {
+        "events": [
+          {
+            "type": "delay",
+            "minutes": 40
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "must": [
+        "completed 节点不变",
+        "runtimeAfter.now=2026-11-18T10:55:00+08:00",
+        "pending 时间重新计算",
+        "正式行程在确认前不变"
+      ]
+    },
+    {
+      "id": "fatigue",
+      "precondition": "status-complete",
+      "request": {
+        "events": [
+          {
+            "type": "fatigue"
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "must": [
+        "runtimeAfter.fatigued=true",
+        "剩余不包含 high",
+        "画像不变"
+      ]
+    },
+    {
+      "id": "rain",
+      "precondition": "status-complete",
+      "request": {
+        "events": [
+          {
+            "type": "rain"
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "must": [
+        "runtimeAfter.rain=true",
+        "剩余仅 indoor",
+        "历史不变"
+      ]
+    },
+    {
+      "id": "closed",
+      "precondition": "status-complete",
+      "request": {
+        "events": [
+          {
+            "type": "closed",
+            "attractionId": "a02"
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "must": [
+        "runtimeAfter.closedAttractionIds 包含 a02",
+        "剩余排除 a02",
+        "历史不变"
+      ]
+    },
+    {
+      "id": "interest-change",
+      "precondition": "status-complete",
+      "request": {
+        "events": [
+          {
+            "type": "interest_change",
+            "interest": "nature"
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "must": [
+        "本次 nature 权重使用 min(1,原值+0.3)",
+        "正式画像不变",
+        "原剩余点先尝试，新候选按临时评分补充"
+      ]
+    },
+    {
+      "id": "invalid-duplicate-event",
+      "request": {
+        "events": [
+          {
+            "type": "rain"
+          },
+          {
+            "type": "rain"
+          }
+        ],
+        "now": "2026-11-18T10:15:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "expectedStatus": 400,
+      "must": [
+        "重复类型拒绝"
+      ]
+    },
+    {
+      "id": "invalid-now",
+      "request": {
+        "events": [
+          {
+            "type": "delay",
+            "minutes": 40
+          }
+        ],
+        "now": "2026-11-18T08:00:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "precondition": "status-complete",
+      "expectedStatus": 409,
+      "must": [
+        "不能早于当前状态时间"
+      ]
+    }
+  ]
+}

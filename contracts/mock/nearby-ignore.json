@@ -1,0 +1,24 @@
+{
+  "name": "nearby-ignore",
+  "operationId": "nearby",
+  "method": "POST",
+  "path": "/api/nearby",
+  "query": {},
+  "request": {
+    "action": "ignore",
+    "attractionId": "a04"
+  },
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "enabled": true,
+      "items": [],
+      "ignoredAttractionIds": [
+        "a04"
+      ],
+      "radiusMeters": 3000,
+      "distanceKind": "straight_line"
+    }
+  }
+}

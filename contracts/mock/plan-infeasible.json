@@ -1,0 +1,26 @@
+{
+  "name": "plan-infeasible",
+  "operationId": "plan",
+  "method": "POST",
+  "path": "/api/plan",
+  "query": {},
+  "request": {
+    "mode": "generate",
+    "attractionIds": [
+      "a03"
+    ]
+  },
+  "precondition": "conditions.dayEnd=10:00",
+  "expectedStatus": 422,
+  "response": {
+    "message": "所选景点无法在当前时间和预算内安排。",
+    "details": {
+      "conflicts": [
+        {
+          "attractionId": "a03",
+          "reason": "remaining_time"
+        }
+      ]
+    }
+  }
+}

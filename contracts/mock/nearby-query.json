@@ -1,0 +1,33 @@
+{
+  "name": "nearby-query",
+  "operationId": "nearby",
+  "method": "POST",
+  "path": "/api/nearby",
+  "query": {},
+  "request": {
+    "action": "query"
+  },
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "enabled": true,
+      "items": [
+        {
+          "attractionId": "a04",
+          "name": "演示文化展厅",
+          "distanceMeters": 1001,
+          "estimatedMinutes": 75,
+          "reasons": [
+            "匹配历史兴趣",
+            "室内低强度",
+            "当前可访问"
+          ]
+        }
+      ],
+      "ignoredAttractionIds": [],
+      "radiusMeters": 3000,
+      "distanceKind": "straight_line"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "candidate-invalid",
+  "operationId": "confirmProposal",
+  "method": "POST",
+  "path": "/api/replan/confirm",
+  "query": {},
+  "request": {
+    "proposalId": "proposal_old"
+  },
+  "precondition": null,
+  "expectedStatus": 409,
+  "response": {
+    "message": "候选已失效，请重新生成。",
+    "details": {}
+  }
+}

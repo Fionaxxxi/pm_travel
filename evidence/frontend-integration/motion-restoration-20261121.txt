@@ -1,0 +1,19 @@
+旅伴 AI 原型动效恢复验收（2026-11-21）
+
+对照：D:\pm\旅伴AI-表单与曲线路线版.html 的自定义动效。浏览器为 Codex IAB，应用页面 http://127.0.0.1:5191/#work。
+
+实现：
+- 首页标题使用 tm-title，正文和主按钮使用 tm-copy。
+- 原型的 IntersectionObserver 滚动进入效果映射到 Vue 的 welcome、画廊卡片、目的地卡、偏好表单区、路线站点和 subheading。
+- 页面导航标题使用 tm-view；路线曲线使用 tm-route-draw，站点编号依次使用 tm-node-appear。
+- `prefers-reduced-motion: reduce` 仍关闭动画、过渡和平滑滚动，路线线条保持完整可见。
+
+实机观察（浏览器 `matchMedia('(prefers-reduced-motion: reduce)').matches` 为 false）：
+- 首页 h1：animation-name tm-title，duration 1.15s。
+- 首页正文：animation-name tm-copy，duration 1.1s。
+- 欢迎区及进入视口的画廊卡：类名出现 tm-enter，animation-name tm-copy，duration 0.8s。
+- 旅程曲线：容器类名含 is-route-visible；路径为 tm-route-draw / 1.6s；4 个站点均为 tm-node-appear / 0.5s。
+
+验证：`npm run build` 成功，1620 个模块构建完成。日志见 build-motion-restoration-20261121.txt。代码静态检测的既有提示仅涉及带语义的状态提示侧边色条，与本次动效代码无关。
+
+限制：本次验证的是普通动效模式；系统级减少动态效果开关检查按项目所有者指示不做。没有归档截图。

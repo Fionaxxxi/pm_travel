@@ -1,0 +1,32 @@
+{
+  "name": "guide-preset-detailed",
+  "operationId": "getGuide",
+  "method": "POST",
+  "path": "/api/guide",
+  "query": {},
+  "request": {
+    "attractionId": "a04",
+    "depth": "detailed",
+    "availableMinutes": 10
+  },
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "attractionId": "a04",
+      "depth": "detailed",
+      "effectiveDepth": "detailed",
+      "text": "演示文化展厅是用于软件演示的虚构地点。本示例资料用于验证个性化解说：可从历史发展与人物故事角度组织介绍。这里没有真实文物年代或营业承诺，实际旅游信息必须另行核对。演示时可以比较不同兴趣下的讲解重点，并切换简短与详细模式。",
+      "sources": [
+        {
+          "title": "Demo 虚构资料 v1",
+          "url": null,
+          "note": "人工构造，仅验证功能，无真实地理或史实含义。"
+        }
+      ],
+      "sourceMode": "preset",
+      "degraded": true,
+      "notice": "未配置模型或调用失败，展示预置解说。"
+    }
+  }
+}

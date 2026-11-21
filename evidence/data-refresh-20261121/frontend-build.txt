@@ -1,0 +1,13 @@
+
+> travelmate-ai-demo@1.0.0 build
+> vite build
+
+vite v6.1.0 building for production...
+transforming...
+✓ 1620 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:   0.33 kB
+dist/assets/index-B0XwMkT1.css   91.42 kB │ gzip:  20.72 kB
+dist/assets/index-D8_JoRbf.js   387.63 kB │ gzip: 132.31 kB
+✓ built in 7.28s

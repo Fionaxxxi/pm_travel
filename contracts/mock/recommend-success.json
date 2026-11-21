@@ -1,0 +1,77 @@
+{
+  "name": "recommend-success",
+  "operationId": "recommend",
+  "method": "POST",
+  "path": "/api/recommend",
+  "query": {},
+  "request": null,
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "items": [
+        {
+          "attractionId": "a01",
+          "name": "演示历史馆",
+          "point": {
+            "lat": 30.25,
+            "lng": 120.15
+          },
+          "score": 0.8,
+          "reasons": [
+            "匹配history兴趣",
+            "游览约60分钟"
+          ],
+          "stayMinutes": 60,
+          "ticketYuan": 20
+        },
+        {
+          "attractionId": "a02",
+          "name": "演示老街",
+          "point": {
+            "lat": 30.253,
+            "lng": 120.15
+          },
+          "score": 0.8,
+          "reasons": [
+            "匹配history兴趣",
+            "游览约60分钟"
+          ],
+          "stayMinutes": 60,
+          "ticketYuan": 0
+        },
+        {
+          "attractionId": "a04",
+          "name": "演示文化展厅",
+          "point": {
+            "lat": 30.259,
+            "lng": 120.15
+          },
+          "score": 0.8,
+          "reasons": [
+            "匹配history兴趣",
+            "游览约60分钟"
+          ],
+          "stayMinutes": 60,
+          "ticketYuan": 10
+        },
+        {
+          "attractionId": "a03",
+          "name": "演示山地公园",
+          "point": {
+            "lat": 30.256,
+            "lng": 120.15
+          },
+          "score": 0.05,
+          "reasons": [
+            "匹配nature兴趣",
+            "游览约120分钟"
+          ],
+          "stayMinutes": 120,
+          "ticketYuan": 20
+        }
+      ],
+      "emptyReason": null
+    }
+  }
+}

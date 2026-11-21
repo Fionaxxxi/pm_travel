@@ -1,0 +1,37 @@
+{
+  "name": "save-failed",
+  "operationId": "saveProfile",
+  "method": "PUT",
+  "path": "/api/profile",
+  "query": {},
+  "request": {
+    "profile": {
+      "interests": {
+        "history": 0.8,
+        "nature": 0.3,
+        "food": 0.5
+      },
+      "pace": "relaxed",
+      "guideDepth": "short"
+    },
+    "conditions": {
+      "startDate": "2026-11-18",
+      "days": 1,
+      "dayStart": "09:00",
+      "dayEnd": "17:00",
+      "budgetYuan": 100,
+      "startPoint": {
+        "lat": 30.25,
+        "lng": 120.15
+      }
+    }
+  },
+  "precondition": null,
+  "expectedStatus": 500,
+  "response": {
+    "message": "保存失败，原数据未改变。",
+    "details": {
+      "retryable": true
+    }
+  }
+}

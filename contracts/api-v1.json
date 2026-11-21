@@ -1,0 +1,2645 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "旅伴 AI Demo 冻结接口契约",
+    "version": "1.0.0",
+    "description": "单用户、本机、固定样例。此文件是人工冻结的开发契约，不是已运行服务的证明。输入未知字段拒绝；输出消费者容忍新增字段。"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8031"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "getHealth",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Health"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/state": {
+      "get": {
+        "operationId": "getState",
+        "summary": "getState",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profile": {
+      "put": {
+        "operationId": "saveProfile",
+        "summary": "saveProfile",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveProfile"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/attractions": {
+      "get": {
+        "operationId": "listAttractions",
+        "summary": "listAttractions",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AttractionList"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "history",
+                "nature",
+                "food",
+                "photography"
+              ]
+            }
+          },
+          {
+            "name": "enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createAttraction",
+        "summary": "createAttraction",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Attraction"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttractionFields"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateAttraction",
+        "summary": "updateAttraction",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Attraction"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveAttraction"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recommend": {
+      "post": {
+        "operationId": "recommend",
+        "summary": "recommend",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/RecommendResult"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan": {
+      "post": {
+        "operationId": "plan",
+        "summary": "plan",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "无法形成可行行程",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trip/status": {
+      "post": {
+        "operationId": "setNodeStatus",
+        "summary": "setNodeStatus",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/replan": {
+      "post": {
+        "operationId": "replan",
+        "summary": "replan",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "无法形成可行行程",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplanRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/replan/confirm": {
+      "post": {
+        "operationId": "confirmProposal",
+        "summary": "confirmProposal",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposalRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/replan/discard": {
+      "post": {
+        "operationId": "discardProposal",
+        "summary": "discardProposal",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposalRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guide": {
+      "post": {
+        "operationId": "getGuide",
+        "summary": "getGuide",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Guide"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuideRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nearby": {
+      "post": {
+        "operationId": "nearby",
+        "summary": "nearby",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/NearbyResult"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NearbyRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedback": {
+      "post": {
+        "operationId": "submitFeedback",
+        "summary": "submitFeedback",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FeedbackResult"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对象不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "状态冲突或候选失效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reset": {
+      "post": {
+        "operationId": "resetDemo",
+        "summary": "resetDemo",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/State"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入无效",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "保存或内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Point": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "lng": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "required": [
+          "lat",
+          "lng"
+        ],
+        "additionalProperties": false
+      },
+      "Interests": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "nature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "food": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "history",
+          "nature",
+          "food"
+        ],
+        "additionalProperties": false
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "interests": {
+            "$ref": "#/components/schemas/Interests"
+          },
+          "pace": {
+            "type": "string",
+            "enum": [
+              "relaxed",
+              "normal"
+            ]
+          },
+          "guideDepth": {
+            "type": "string",
+            "enum": [
+              "short",
+              "detailed"
+            ]
+          }
+        },
+        "required": [
+          "interests",
+          "pace",
+          "guideDepth"
+        ],
+        "additionalProperties": false
+      },
+      "Conditions": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "dayStart": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "dayEnd": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "budgetYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "startPoint": {
+            "$ref": "#/components/schemas/Point"
+          }
+        },
+        "required": [
+          "startDate",
+          "days",
+          "dayStart",
+          "dayEnd",
+          "budgetYuan",
+          "startPoint"
+        ],
+        "additionalProperties": false
+      },
+      "Source": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "url",
+          "note"
+        ],
+        "additionalProperties": false
+      },
+      "AttractionFields": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "history",
+              "nature",
+              "food",
+              "photography"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "history",
+                "nature",
+                "food"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "openTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "closeTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "ticketYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "stayMinutes": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 240
+          },
+          "indoor": {
+            "type": "boolean"
+          },
+          "intensity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "knowledgeText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "minItems": 1
+          },
+          "presetGuides": {
+            "type": "object",
+            "properties": {
+              "history": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "nature": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "food": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "history",
+              "nature",
+              "food"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "name",
+          "category",
+          "tags",
+          "point",
+          "openTime",
+          "closeTime",
+          "ticketYuan",
+          "stayMinutes",
+          "indoor",
+          "intensity",
+          "enabled",
+          "knowledgeText",
+          "sources",
+          "presetGuides"
+        ],
+        "additionalProperties": false
+      },
+      "Attraction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "history",
+              "nature",
+              "food",
+              "photography"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "history",
+                "nature",
+                "food"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "openTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "closeTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "ticketYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "stayMinutes": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 240
+          },
+          "indoor": {
+            "type": "boolean"
+          },
+          "intensity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "knowledgeText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "minItems": 1
+          },
+          "presetGuides": {
+            "type": "object",
+            "properties": {
+              "history": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "nature": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "food": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "history",
+              "nature",
+              "food"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "tags",
+          "point",
+          "openTime",
+          "closeTime",
+          "ticketYuan",
+          "stayMinutes",
+          "indoor",
+          "intensity",
+          "enabled",
+          "knowledgeText",
+          "sources",
+          "presetGuides"
+        ],
+        "additionalProperties": false
+      },
+      "Node": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "attractionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "attractionName": {
+            "type": "string"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "dayIndex": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "arriveAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          },
+          "leaveAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          },
+          "travelMinutes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stayMinutes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "ticketYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "current",
+              "completed",
+              "skipped"
+            ]
+          },
+          "actualArrivalAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": ".*\\+08:00$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "actualFinishedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": ".*\\+08:00$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "attractionId",
+          "attractionName",
+          "point",
+          "dayIndex",
+          "arriveAt",
+          "startAt",
+          "leaveAt",
+          "travelMinutes",
+          "stayMinutes",
+          "ticketYuan",
+          "status",
+          "actualArrivalAt",
+          "actualFinishedAt"
+        ],
+        "additionalProperties": false
+      },
+      "Trip": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Node"
+            }
+          },
+          "estimatedTicketYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transportSource": {
+            "type": "string",
+            "enum": [
+              "demo_matrix"
+            ]
+          },
+          "routeKind": {
+            "type": "string",
+            "enum": [
+              "schematic"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "nodes",
+          "estimatedTicketYuan",
+          "warnings",
+          "transportSource",
+          "routeKind"
+        ],
+        "additionalProperties": false
+      },
+      "Runtime": {
+        "type": "object",
+        "properties": {
+          "now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "rain": {
+            "type": "boolean"
+          },
+          "fatigued": {
+            "type": "boolean"
+          },
+          "closedAttractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        },
+        "required": [
+          "now",
+          "point",
+          "rain",
+          "fatigued",
+          "closedAttractionIds"
+        ],
+        "additionalProperties": false
+      },
+      "Proposal": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "trip": {
+            "$ref": "#/components/schemas/Trip"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "removedAttractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          },
+          "addedAttractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          },
+          "runtimeAfter": {
+            "$ref": "#/components/schemas/Runtime"
+          }
+        },
+        "required": [
+          "id",
+          "trip",
+          "reasons",
+          "removedAttractionIds",
+          "addedAttractionIds",
+          "runtimeAfter"
+        ],
+        "additionalProperties": false
+      },
+      "Recommendation": {
+        "type": "object",
+        "properties": {
+          "attractionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "name": {
+            "type": "string"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "score": {
+            "type": "number"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stayMinutes": {
+            "type": "integer"
+          },
+          "ticketYuan": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "attractionId",
+          "name",
+          "point",
+          "score",
+          "reasons",
+          "stayMinutes",
+          "ticketYuan"
+        ],
+        "additionalProperties": false
+      },
+      "NearbyItem": {
+        "type": "object",
+        "properties": {
+          "attractionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "name": {
+            "type": "string"
+          },
+          "distanceMeters": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "estimatedMinutes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "attractionId",
+          "name",
+          "distanceMeters",
+          "estimatedMinutes",
+          "reasons"
+        ],
+        "additionalProperties": false
+      },
+      "FeedbackRecord": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "like",
+              "dislike",
+              "too_tiring",
+              "too_long"
+            ]
+          },
+          "attractionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "before": {
+            "$ref": "#/components/schemas/Profile"
+          },
+          "after": {
+            "$ref": "#/components/schemas/Profile"
+          }
+        },
+        "required": [
+          "requestId",
+          "kind",
+          "attractionId",
+          "before",
+          "after"
+        ],
+        "additionalProperties": false
+      },
+      "State": {
+        "type": "object",
+        "properties": {
+          "contractVersion": {
+            "type": "string",
+            "enum": [
+              "1.0.0"
+            ]
+          },
+          "datasetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          },
+          "conditions": {
+            "$ref": "#/components/schemas/Conditions"
+          },
+          "trip": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Trip"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "proposal": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Proposal"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "runtime": {
+            "$ref": "#/components/schemas/Runtime"
+          },
+          "nearbyEnabled": {
+            "type": "boolean"
+          },
+          "ignoredAttractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          },
+          "feedback": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeedbackRecord"
+            }
+          }
+        },
+        "required": [
+          "contractVersion",
+          "datasetId",
+          "profile",
+          "conditions",
+          "trip",
+          "proposal",
+          "runtime",
+          "nearbyEnabled",
+          "ignoredAttractionIds",
+          "feedback"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "message",
+          "details"
+        ],
+        "additionalProperties": false
+      },
+      "SaveProfile": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          },
+          "conditions": {
+            "$ref": "#/components/schemas/Conditions"
+          }
+        },
+        "required": [
+          "profile",
+          "conditions"
+        ],
+        "additionalProperties": false
+      },
+      "PlanRequest": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "generate",
+              "edit"
+            ]
+          },
+          "attractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          }
+        },
+        "required": [
+          "mode",
+          "attractionIds"
+        ],
+        "additionalProperties": false
+      },
+      "StatusRequest": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "arrive",
+              "complete",
+              "skip",
+              "leave"
+            ]
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          }
+        },
+        "required": [
+          "nodeId",
+          "action",
+          "at"
+        ],
+        "additionalProperties": false
+      },
+      "Event": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "delay"
+                ]
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 240
+              }
+            },
+            "required": [
+              "type",
+              "minutes"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "fatigue"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rain"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "closed"
+                ]
+              },
+              "attractionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "type",
+              "attractionId"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "interest_change"
+                ]
+              },
+              "interest": {
+                "type": "string",
+                "enum": [
+                  "history",
+                  "nature",
+                  "food"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "interest"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "ReplanRequest": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": ".*\\+08:00$"
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          }
+        },
+        "required": [
+          "events",
+          "now",
+          "point"
+        ],
+        "additionalProperties": false
+      },
+      "ProposalRequest": {
+        "type": "object",
+        "properties": {
+          "proposalId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "proposalId"
+        ],
+        "additionalProperties": false
+      },
+      "GuideRequest": {
+        "type": "object",
+        "properties": {
+          "attractionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "depth": {
+            "type": "string",
+            "enum": [
+              "short",
+              "detailed"
+            ]
+          },
+          "availableMinutes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 120
+          }
+        },
+        "required": [
+          "attractionId",
+          "depth",
+          "availableMinutes"
+        ],
+        "additionalProperties": false
+      },
+      "Guide": {
+        "type": "object",
+        "properties": {
+          "attractionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "depth": {
+            "type": "string",
+            "enum": [
+              "short",
+              "detailed"
+            ]
+          },
+          "effectiveDepth": {
+            "type": "string",
+            "enum": [
+              "short",
+              "detailed"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            }
+          },
+          "sourceMode": {
+            "type": "string",
+            "enum": [
+              "llm",
+              "preset"
+            ]
+          },
+          "degraded": {
+            "type": "boolean"
+          },
+          "notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "attractionId",
+          "depth",
+          "effectiveDepth",
+          "text",
+          "sources",
+          "sourceMode",
+          "degraded",
+          "notice"
+        ],
+        "additionalProperties": false
+      },
+      "NearbyRequest": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "query"
+                ]
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "ignore"
+                ]
+              },
+              "attractionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "action",
+              "attractionId"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "set_enabled"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "action",
+              "enabled"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "NearbyResult": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NearbyItem"
+            }
+          },
+          "ignoredAttractionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            }
+          },
+          "radiusMeters": {
+            "type": "integer"
+          },
+          "distanceKind": {
+            "type": "string",
+            "enum": [
+              "straight_line"
+            ]
+          }
+        },
+        "required": [
+          "enabled",
+          "items",
+          "ignoredAttractionIds",
+          "radiusMeters",
+          "distanceKind"
+        ],
+        "additionalProperties": false
+      },
+      "FeedbackRequest": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "like",
+                  "dislike"
+                ]
+              },
+              "attractionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "requestId",
+              "kind",
+              "attractionId"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "too_tiring",
+                  "too_long"
+                ]
+              }
+            },
+            "required": [
+              "requestId",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "FeedbackResult": {
+        "type": "object",
+        "properties": {
+          "record": {
+            "$ref": "#/components/schemas/FeedbackRecord"
+          },
+          "duplicate": {
+            "type": "boolean"
+          },
+          "state": {
+            "$ref": "#/components/schemas/State"
+          }
+        },
+        "required": [
+          "record",
+          "duplicate",
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "ResetRequest": {
+        "type": "object",
+        "properties": {
+          "confirm": {
+            "type": "string",
+            "enum": [
+              "RESET_DEMO"
+            ]
+          }
+        },
+        "required": [
+          "confirm"
+        ],
+        "additionalProperties": false
+      },
+      "SaveAttraction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "history",
+              "nature",
+              "food",
+              "photography"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "history",
+                "nature",
+                "food"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "openTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "closeTime": {
+            "type": "string",
+            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "ticketYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "stayMinutes": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 240
+          },
+          "indoor": {
+            "type": "boolean"
+          },
+          "intensity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "knowledgeText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "minItems": 1
+          },
+          "presetGuides": {
+            "type": "object",
+            "properties": {
+              "history": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "nature": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              },
+              "food": {
+                "type": "object",
+                "properties": {
+                  "short": {
+                    "type": "string"
+                  },
+                  "detailed": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "short",
+                  "detailed"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "history",
+              "nature",
+              "food"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "tags",
+          "point",
+          "openTime",
+          "closeTime",
+          "ticketYuan",
+          "stayMinutes",
+          "indoor",
+          "intensity",
+          "enabled",
+          "knowledgeText",
+          "sources",
+          "presetGuides"
+        ],
+        "additionalProperties": false
+      },
+      "RecommendResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Recommendation"
+            }
+          },
+          "emptyReason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "emptyReason"
+        ],
+        "additionalProperties": false
+      },
+      "AttractionList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attraction"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "Health": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          },
+          "contractVersion": {
+            "type": "string",
+            "enum": [
+              "1.0.0"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "contractVersion"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

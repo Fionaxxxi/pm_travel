@@ -1,0 +1,28 @@
+{
+  "contractVersion": "1.0.0",
+  "backendHost": "127.0.0.1",
+  "backendPort": 8031,
+  "frontendHost": "127.0.0.1",
+  "frontendPort": 5191,
+  "corsOrigins": [
+    "http://127.0.0.1:5191",
+    "http://localhost:5191"
+  ],
+  "frontendEnv": {
+    "VITE_API_MODE": "real",
+    "VITE_API_BASE_URL": "http://127.0.0.1:8031"
+  },
+  "backendEnv": {
+    "GUIDE_MODE": "preset",
+    "LLM_BASE_URL": "",
+    "LLM_MODEL": "",
+    "LLM_API_KEY": ""
+  },
+  "timezone": "Asia/Shanghai",
+  "guideTimeoutSeconds": 20,
+  "frontendTimeoutSeconds": 30,
+  "maxPlanNodesPerDay": 4,
+  "nearbyRadiusMeters": 3000,
+  "nearbyLimit": 3,
+  "feedbackStep": 0.1
+}

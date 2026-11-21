@@ -1,0 +1,39 @@
+{
+  "name": "invalid-input",
+  "operationId": "saveProfile",
+  "method": "PUT",
+  "path": "/api/profile",
+  "query": {},
+  "request": {
+    "profile": {
+      "interests": {
+        "history": 0.8,
+        "nature": 0.3,
+        "food": 0.5
+      },
+      "pace": "fast",
+      "guideDepth": "short"
+    },
+    "conditions": {
+      "startDate": "2026-11-18",
+      "days": 1,
+      "dayStart": "09:00",
+      "dayEnd": "17:00",
+      "budgetYuan": 100,
+      "startPoint": {
+        "lat": 30.25,
+        "lng": 120.15
+      }
+    }
+  },
+  "precondition": null,
+  "expectedStatus": 400,
+  "response": {
+    "message": "请求参数不符合契约。",
+    "details": {
+      "fields": [
+        "profile.pace"
+      ]
+    }
+  }
+}

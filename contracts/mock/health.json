@@ -1,0 +1,16 @@
+{
+  "name": "health",
+  "operationId": "getHealth",
+  "method": "GET",
+  "path": "/api/health",
+  "query": {},
+  "request": null,
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "status": "ok",
+      "contractVersion": "1.0.0"
+    }
+  }
+}

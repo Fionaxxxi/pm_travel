@@ -1,0 +1,120 @@
+{
+  "name": "status-skip",
+  "operationId": "setNodeStatus",
+  "method": "POST",
+  "path": "/api/trip/status",
+  "query": {},
+  "request": {
+    "nodeId": "n_a01",
+    "action": "skip",
+    "at": "2026-11-18T09:05:00+08:00"
+  },
+  "precondition": "plan-generate",
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "contractVersion": "1.0.0",
+      "datasetId": "synthetic-demo-v1",
+      "profile": {
+        "interests": {
+          "history": 0.8,
+          "nature": 0.3,
+          "food": 0.5
+        },
+        "pace": "relaxed",
+        "guideDepth": "short"
+      },
+      "conditions": {
+        "startDate": "2026-11-18",
+        "days": 1,
+        "dayStart": "09:00",
+        "dayEnd": "17:00",
+        "budgetYuan": 100,
+        "startPoint": {
+          "lat": 30.25,
+          "lng": 120.15
+        }
+      },
+      "trip": {
+        "id": "trip_demo_001",
+        "nodes": [
+          {
+            "id": "n_a01",
+            "attractionId": "a01",
+            "attractionName": "演示历史馆",
+            "point": {
+              "lat": 30.25,
+              "lng": 120.15
+            },
+            "dayIndex": 1,
+            "arriveAt": "2026-11-18T09:15:00+08:00",
+            "startAt": "2026-11-18T09:15:00+08:00",
+            "leaveAt": "2026-11-18T10:15:00+08:00",
+            "travelMinutes": 15,
+            "stayMinutes": 60,
+            "ticketYuan": 20,
+            "status": "skipped",
+            "actualArrivalAt": null,
+            "actualFinishedAt": null
+          },
+          {
+            "id": "n_a02",
+            "attractionId": "a02",
+            "attractionName": "演示老街",
+            "point": {
+              "lat": 30.253,
+              "lng": 120.15
+            },
+            "dayIndex": 1,
+            "arriveAt": "2026-11-18T10:30:00+08:00",
+            "startAt": "2026-11-18T10:30:00+08:00",
+            "leaveAt": "2026-11-18T11:30:00+08:00",
+            "travelMinutes": 15,
+            "stayMinutes": 60,
+            "ticketYuan": 0,
+            "status": "pending",
+            "actualArrivalAt": null,
+            "actualFinishedAt": null
+          },
+          {
+            "id": "n_a03",
+            "attractionId": "a03",
+            "attractionName": "演示山地公园",
+            "point": {
+              "lat": 30.256,
+              "lng": 120.15
+            },
+            "dayIndex": 1,
+            "arriveAt": "2026-11-18T11:45:00+08:00",
+            "startAt": "2026-11-18T11:45:00+08:00",
+            "leaveAt": "2026-11-18T13:45:00+08:00",
+            "travelMinutes": 15,
+            "stayMinutes": 120,
+            "ticketYuan": 20,
+            "status": "pending",
+            "actualArrivalAt": null,
+            "actualFinishedAt": null
+          }
+        ],
+        "estimatedTicketYuan": 40,
+        "warnings": [],
+        "transportSource": "demo_matrix",
+        "routeKind": "schematic"
+      },
+      "proposal": null,
+      "runtime": {
+        "now": "2026-11-18T09:05:00+08:00",
+        "point": {
+          "lat": 30.25,
+          "lng": 120.15
+        },
+        "rain": false,
+        "fatigued": false,
+        "closedAttractionIds": []
+      },
+      "nearbyEnabled": true,
+      "ignoredAttractionIds": [],
+      "feedback": []
+    }
+  }
+}

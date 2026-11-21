@@ -1,0 +1,8 @@
+frontend=200
+api_uses_8031=True
+backend=200
+cors=http://127.0.0.1:5191
+attractions=14
+photography=2
+first=独克宗古城
+last=拉姆央措湖畔

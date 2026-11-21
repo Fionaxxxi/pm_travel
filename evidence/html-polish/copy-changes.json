@@ -1,0 +1,330 @@
+{
+  "scope": "页面标题、标语与引导文字；不改业务规则、资料事实或音频正文",
+  "changes": [
+    {
+      "before": "A WORLD TO EXPLORE",
+      "after": "旅行灵感",
+      "count": 2
+    },
+    {
+      "before": "去看看，<br>更大的世界。",
+      "after": "出发，<br>去喜欢的地方",
+      "count": 1
+    },
+    {
+      "before": "我会陪你，从想法走到出发。",
+      "after": "选喜欢的景点，排合适的行程，途中有变化也能调整。",
+      "count": 1
+    },
+    {
+      "before": "开启我的旅程 ↗",
+      "after": "开始规划 ↗",
+      "count": 1
+    },
+    {
+      "before": "EVERY JOURNEY BEGINS WITH YOU",
+      "after": "从目的地开始",
+      "count": 1
+    },
+    {
+      "before": "这次想去哪里？",
+      "after": "这次，想去哪里？",
+      "count": 1
+    },
+    {
+      "before": "告诉我一点点，剩下的交给我。",
+      "after": "已有目的地，就开始安排行程；还没决定，也可以先找找灵感。",
+      "count": 1
+    },
+    {
+      "before": "我已经有想去的地方 →",
+      "after": "设置我的行程 →",
+      "count": 1
+    },
+    {
+      "before": "还没想好，帮我推荐 ↗",
+      "after": "浏览目的地 ↗",
+      "count": 1
+    },
+    {
+      "before": "导入已有旅行计划 ＋",
+      "after": "导入已有行程 ＋",
+      "count": 1
+    },
+    {
+      "before": "['NATURE','CULTURE','LOCAL TASTE']",
+      "after": "['山湖风景','古城街巷','当地风味']",
+      "count": 1
+    },
+    {
+      "before": "['去山野间，找回自己。','在街巷里，遇见生活。','慢下来，尝尝当地味道。']",
+      "after": "['去山湖之间走一走','逛逛古城与老街','尝尝当地的味道']",
+      "count": 1
+    },
+    {
+      "before": "THE HIGHLAND EDITION / 01",
+      "after": "高原旅行灵感",
+      "count": 1
+    },
+    {
+      "before": "SOMEWHERE THAT FEELS LIKE YOU",
+      "after": "目的地灵感",
+      "count": 1
+    },
+    {
+      "before": "还没决定？<br>让心动，带你出发。",
+      "after": "还没想好去哪？<br>看看这些目的地",
+      "count": 1
+    },
+    {
+      "before": "海岛、雨林、古城，或一片辽阔的沙。<br>从你喜欢的生活方式，找到下一站。",
+      "after": "看海、逛古城、走进山野，或尝尝当地风味。<br>从你喜欢的体验开始，选一个目的地。",
+      "count": 1
+    },
+    {
+      "before": "A LITTLE INSPIRATION / 01",
+      "after": "换个地方，看看风景",
+      "count": 1
+    },
+    {
+      "before": "根据已保存的兴趣匹配，点击卡片了解目的地，再选择这里开始规划。",
+      "after": "按你的兴趣排列。查看目的地介绍，选好后即可规划当地行程。",
+      "count": 1
+    },
+    {
+      "before": "{{d.english}}",
+      "after": "{{d.region}}",
+      "count": 1
+    },
+    {
+      "before": "去看看 →",
+      "after": "查看介绍 →",
+      "count": 1
+    },
+    {
+      "before": "{settings:'BEFORE THE JOURNEY',work:'YOUR PERSONAL TRAVEL JOURNAL',admin:'THE DESTINATION LIBRARY'}",
+      "after": "{settings:'旅行设置',work:'我的行程',admin:'景点资料库'}",
+      "count": 1
+    },
+    {
+      "before": "{settings:'每段旅程，都从你开始。',work:currentDestination.name+'，慢慢来。',admin:'每一个地方，都有故事。'}",
+      "after": "{settings:'安排一趟适合你的旅行',work:currentDestination.name+' · 我的行程',admin:'管理景点与资料'}",
+      "count": 1
+    },
+    {
+      "before": "{{currentDestination.english}} / TRAVEL NOTES",
+      "after": "{{currentDestination.name}} · 旅行计划",
+      "count": 1
+    },
+    {
+      "before": "{settings:'向着心动的风景出发。',work:'山湖之间，自在行走。',admin:'收集值得停留的地方。'}",
+      "after": "{settings:'选好兴趣与时间，再安排每一站',work:'查看沿途安排，按需要调整行程',admin:'记录景点信息，完善推荐依据'}",
+      "count": 1
+    },
+    {
+      "before": "THIS JOURNEY",
+      "after": "本次目的地",
+      "count": 1
+    },
+    {
+      "before": "什么会让你心动？",
+      "after": "旅行中，你更喜欢什么",
+      "count": 1
+    },
+    {
+      "before": "给旅行留一点时间。",
+      "after": "什么时候出发，准备玩多久",
+      "count": 1
+    },
+    {
+      "before": "用你喜欢的节奏。",
+      "after": "选好节奏和预算",
+      "count": 1
+    },
+    {
+      "before": "去哪里不重要，<br>以自己的方式出发。",
+      "after": "喜欢的地方，<br>按自己的节奏逛",
+      "count": 1
+    },
+    {
+      "before": "短暂逃离",
+      "after": "当天游览",
+      "count": 1
+    },
+    {
+      "before": "多留一会",
+      "after": "分两天逛",
+      "count": 1
+    },
+    {
+      "before": "保存偏好，发现适合我的地方 →",
+      "after": "保存设置，查看推荐 →",
+      "count": 1
+    },
+    {
+      "before": "把风景，连成一天。",
+      "after": "今天的游览路线",
+      "count": 1
+    },
+    {
+      "before": "CHANGE WITH CONFIDENCE",
+      "after": "行程调整建议",
+      "count": 1
+    },
+    {
+      "before": "CURATED FOR YOU",
+      "after": "景点推荐",
+      "count": 1
+    },
+    {
+      "before": "为你发现",
+      "after": "适合这次旅行的景点",
+      "count": 1
+    },
+    {
+      "before": "THE WAY THROUGH YOUR DAY",
+      "after": "沿途安排",
+      "count": 1
+    },
+    {
+      "before": "沿途停留，一站一站。",
+      "after": "每一站，怎么安排",
+      "count": 1
+    },
+    {
+      "before": "YOUR NEXT LITTLE DISCOVERY",
+      "after": "当前查看",
+      "count": 1
+    },
+    {
+      "before": "计划有变，也没关系。",
+      "after": "计划有变，接着调整",
+      "count": 1
+    },
+    {
+      "before": "AT YOUR OWN PACE",
+      "after": "途中调整",
+      "count": 1
+    },
+    {
+      "before": "转角，也许有惊喜。",
+      "after": "附近还有这些选择",
+      "count": 1
+    },
+    {
+      "before": "{{destinationDetail.english}}",
+      "after": "{{destinationDetail.region}}",
+      "count": 1
+    },
+    {
+      "before": "LISTEN TO THIS PLACE",
+      "after": "景点语音解说",
+      "count": 1
+    },
+    {
+      "before": "让故事，陪你走一段。",
+      "after": "听听这个地方的故事",
+      "count": 1
+    },
+    {
+      "before": "<small>TRAVELMATE</small>",
+      "after": "<small>旅行规划助手</small>",
+      "count": 1
+    },
+    {
+      "before": "{{offline?'离线完整演示':'本机 FastAPI'}} · VOL.02",
+      "after": "{{offline?'本地演示':'原型体验'}}",
+      "count": 1
+    },
+    {
+      "before": "DAY 0{{day}}",
+      "after": "第 {{day}} 天",
+      "count": 1
+    },
+    {
+      "before": "DAY 0{{d}}",
+      "after": "第 {{d}} 天",
+      "count": 1
+    },
+    {
+      "before": "{{state.profile.days}} DAYS",
+      "after": "{{state.profile.days}} 天",
+      "count": 1
+    },
+    {
+      "before": "{{a.score}} MATCH",
+      "after": "匹配分 {{a.score}}",
+      "count": 1
+    },
+    {
+      "before": "{{get(n.id).duration}} MIN",
+      "after": "{{get(n.id).duration}} 分钟",
+      "count": 1
+    },
+    {
+      "before": "{{get(selectedStop).duration}} MIN",
+      "after": "{{get(selectedStop).duration}} 分钟",
+      "count": 1
+    },
+    {
+      "before": "{{a.duration}} MIN",
+      "after": "{{a.duration}} 分钟",
+      "count": 2
+    },
+    {
+      "before": "{{a.distance.toFixed(1)}} KM",
+      "after": "{{a.distance.toFixed(1)}} 公里",
+      "count": 1
+    },
+    {
+      "before": "title:\"把日子，交给海风。\"",
+      "after": "title:\"沿着海湾，逛逛椰林\"",
+      "count": 1
+    },
+    {
+      "before": "description:\"沿着海岸慢慢走，在椰林、海湾与一顿当地风味之间，给自己留一点无所事事的时间。\"",
+      "after": "description:\"以海边散步和椰林观景为主，搭配当地风味小店，适合喜欢海岛风景与轻松行程的你。\"",
+      "count": 1
+    },
+    {
+      "before": "title:\"走进，另一种绿意。\"",
+      "after": "title:\"逛雨林，也逛傣式街巷\"",
+      "count": 1
+    },
+    {
+      "before": "description:\"把行程放慢，在热带植物、傣式街巷与风味小食之间，寻找一段温柔的日常。\"",
+      "after": "description:\"从热带植物到傣式街巷，再安排一顿当地风味，适合把自然与人文体验放进同一趟旅行。\"",
+      "count": 1
+    },
+    {
+      "before": "title:\"山野之间，找回自己。\"",
+      "after": "title:\"从古城出发，去看山湖\"",
+      "count": 1
+    },
+    {
+      "before": "description:\"让古城、山湖与高原草甸串起一段旅程。沿着自己喜欢的节奏，走进风景深处。\"",
+      "after": "description:\"在古城、展馆与高原风景之间选择停留点，根据可用时间和体力安排行程。\"",
+      "count": 1
+    },
+    {
+      "before": "title:\"去听，沙与时间的故事。\"",
+      "after": "title:\"看沙丘光影，逛丝路古城\"",
+      "count": 1
+    },
+    {
+      "before": "description:\"从沙丘的起伏走向街巷里的烟火，在辽阔与细节之间，发现属于自己的丝路想象。\"",
+      "after": "description:\"以沙漠风景、文化展陈和老街风味为线索，寻找适合你的游览组合。\"",
+      "count": 1
+    },
+    {
+      "before": "title:\"不赶路，等一阵风。\"",
+      "after": "title:\"逛古城，沿湖走一段\"",
+      "count": 1
+    },
+    {
+      "before": "description:\"在湖畔骑行与古城闲逛之间，留出一段坐下来喝茶的时间，感受旅行里的留白。\"",
+      "after": "description:\"把古城街巷、湖畔风景和咖啡小店搭配起来，按你的兴趣和时间决定每一站。\"",
+      "count": 1
+    }
+  ]
+}

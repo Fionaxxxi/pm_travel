@@ -1,0 +1,16 @@
+{
+  "name": "recommend-empty",
+  "operationId": "recommend",
+  "method": "POST",
+  "path": "/api/recommend",
+  "query": {},
+  "request": null,
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "items": [],
+      "emptyReason": "当前预算和开放条件下没有可推荐景点。"
+    }
+  }
+}

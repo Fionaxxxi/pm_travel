@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "contractVersion": "1.0.0",
+  "operations": 16,
+  "mockCases": 35,
+  "attractions": 14,
+  "checks": 312,
+  "errors": [],
+  "scope": "结构、样例、引用和矩阵一致性检查；不是已实现服务或业务算法验收。"
+}

@@ -1,0 +1,181 @@
+{
+  "contractVersion": "1.0.0",
+  "usage": "response 为 HTTP body；request 为请求 body。precondition 是场景状态说明。固定展示样例不等于算法预期输出，不承诺可按顺序回放。",
+  "cases": [
+    {
+      "file": "health.json",
+      "operationId": "getHealth",
+      "status": 200
+    },
+    {
+      "file": "state-initial.json",
+      "operationId": "getState",
+      "status": 200
+    },
+    {
+      "file": "profile-save.json",
+      "operationId": "saveProfile",
+      "status": 200
+    },
+    {
+      "file": "attractions-list.json",
+      "operationId": "listAttractions",
+      "status": 200
+    },
+    {
+      "file": "attractions-create.json",
+      "operationId": "createAttraction",
+      "status": 200
+    },
+    {
+      "file": "attractions-update.json",
+      "operationId": "updateAttraction",
+      "status": 200
+    },
+    {
+      "file": "recommend-success.json",
+      "operationId": "recommend",
+      "status": 200
+    },
+    {
+      "file": "recommend-empty.json",
+      "operationId": "recommend",
+      "status": 200
+    },
+    {
+      "file": "plan-generate.json",
+      "operationId": "plan",
+      "status": 200
+    },
+    {
+      "file": "plan-edit.json",
+      "operationId": "plan",
+      "status": 200
+    },
+    {
+      "file": "plan-two-days.json",
+      "operationId": "plan",
+      "status": 200
+    },
+    {
+      "file": "status-arrive.json",
+      "operationId": "setNodeStatus",
+      "status": 200
+    },
+    {
+      "file": "status-complete.json",
+      "operationId": "setNodeStatus",
+      "status": 200
+    },
+    {
+      "file": "replan-delay-fatigue.json",
+      "operationId": "replan",
+      "status": 200
+    },
+    {
+      "file": "replan-confirm.json",
+      "operationId": "confirmProposal",
+      "status": 200
+    },
+    {
+      "file": "replan-discard.json",
+      "operationId": "discardProposal",
+      "status": 200
+    },
+    {
+      "file": "guide-preset-short.json",
+      "operationId": "getGuide",
+      "status": 200
+    },
+    {
+      "file": "guide-preset-detailed.json",
+      "operationId": "getGuide",
+      "status": 200
+    },
+    {
+      "file": "nearby-query.json",
+      "operationId": "nearby",
+      "status": 200
+    },
+    {
+      "file": "nearby-ignore.json",
+      "operationId": "nearby",
+      "status": 200
+    },
+    {
+      "file": "nearby-disabled.json",
+      "operationId": "nearby",
+      "status": 200
+    },
+    {
+      "file": "feedback-like.json",
+      "operationId": "submitFeedback",
+      "status": 200
+    },
+    {
+      "file": "feedback-duplicate.json",
+      "operationId": "submitFeedback",
+      "status": 200
+    },
+    {
+      "file": "reset.json",
+      "operationId": "resetDemo",
+      "status": 200
+    },
+    {
+      "file": "plan-infeasible.json",
+      "operationId": "plan",
+      "status": 422
+    },
+    {
+      "file": "candidate-invalid.json",
+      "operationId": "confirmProposal",
+      "status": 409
+    },
+    {
+      "file": "invalid-input.json",
+      "operationId": "saveProfile",
+      "status": 400
+    },
+    {
+      "file": "save-failed.json",
+      "operationId": "saveProfile",
+      "status": 500
+    },
+    {
+      "file": "unknown-attraction.json",
+      "operationId": "getGuide",
+      "status": 404
+    },
+    {
+      "file": "guide-time-limited.json",
+      "operationId": "getGuide",
+      "status": 200
+    },
+    {
+      "file": "feedback-too_tiring.json",
+      "operationId": "submitFeedback",
+      "status": 200
+    },
+    {
+      "file": "feedback-too_long.json",
+      "operationId": "submitFeedback",
+      "status": 200
+    },
+    {
+      "file": "feedback-dislike.json",
+      "operationId": "submitFeedback",
+      "status": 200
+    },
+    {
+      "file": "status-skip.json",
+      "operationId": "setNodeStatus",
+      "status": 200
+    },
+    {
+      "file": "status-leave.json",
+      "operationId": "setNodeStatus",
+      "status": 200
+    }
+  ]
+}

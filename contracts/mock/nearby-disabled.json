@@ -1,0 +1,22 @@
+{
+  "name": "nearby-disabled",
+  "operationId": "nearby",
+  "method": "POST",
+  "path": "/api/nearby",
+  "query": {},
+  "request": {
+    "action": "set_enabled",
+    "enabled": false
+  },
+  "precondition": null,
+  "expectedStatus": 200,
+  "response": {
+    "data": {
+      "enabled": false,
+      "items": [],
+      "ignoredAttractionIds": [],
+      "radiusMeters": 3000,
+      "distanceKind": "straight_line"
+    }
+  }
+}

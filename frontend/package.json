@@ -1,0 +1,19 @@
+{
+  "name": "travelmate-ai-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "element-plus": "^2.14.8",
+    "leaflet": "1.9.4",
+    "vue": "3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "5.2.1",
+    "vite": "6.1.0"
+  }
+}
