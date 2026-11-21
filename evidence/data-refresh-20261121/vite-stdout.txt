@@ -1,0 +1,9 @@
+
+  VITE v6.1.0  ready in 480 ms
+
+  ➜  Local:   http://127.0.0.1:5191/
+  ➜  press h + enter to show help
+14:05:06 [vite] vite.config.js changed, restarting server...
+14:05:06 [vite] server restarted.
+14:18:49 [vite] (client) hmr update /src/App.vue
+14:19:06 [vite] (client) hmr update /src/style.css
