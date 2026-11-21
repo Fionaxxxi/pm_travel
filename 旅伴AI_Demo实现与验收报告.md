@@ -261,7 +261,7 @@ else:
     source_mode, degraded = "preset", guide_mode == "llm"
 ```
 
-**操作方式。** UI 步骤：进入「我的旅程」→打开任一景点的「地点解说」→选简短或详细。Operator 步骤：在启动后端的同一个 PowerShell 进程里设置 `GUIDE_MODE=llm`，并提供 `DEEPSEEK_API_KEY`；若换供应商则同时配置对应的 `LLM_BASE_URL`、`LLM_MODEL` 与 `LLM_API_KEY`，然后按 [run.ps1](D:/pm/backend/run.ps1) 启动。默认不设置 LLM 模式时继续用本机预置内容。不能将密钥写入项目文件或前端环境变量。
+**操作方式。** UI 步骤：进入「我的旅程」→打开任一景点的「地点解说」→选简短或详细。Operator 步骤：编辑本机私有配置 [backend/.env](D:/pm/backend/.env)，将 `LLM_API_KEY=` 填入有可用余额的 API Key；再运行 [run.ps1](D:/pm/backend/run.ps1)，启动脚本会读取该文件。DeepSeek 模式、地址和模型名已预填。更换供应商时同步修改 `LLM_BASE_URL`、`LLM_MODEL`。`.env` 已被 Git 忽略，仓库只保留无密钥的 `.env.example`。不要把 Key 放在前端、报告或源码。
 
 **验证结果与保留的失败。** `D:\miniconda3\envs\pm` 下新增解说边界测试为 3 passed，`py_compile` 通过；Vite 构建通过（1620 个模块），OpenAPI/样例结构检查 312 项通过。早先的异步 pytest 写法在无 pytest-asyncio 插件的环境中被跳过，改用同步边界测试后通过。此次全量既有后端回归停在首个 `TestClient` 健康检查且超过等待时间没有输出，人工停止；不能声称全量回归已通过。
 

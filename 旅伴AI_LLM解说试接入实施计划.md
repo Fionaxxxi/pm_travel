@@ -6,7 +6,7 @@
 
 权威主计划为 [《旅伴 AI 功能演示 Demo 实现计划》V2.2](D:/pm/旅伴AI_MVP实现计划.md)。前一阶段的实际结果见 [《旅伴 AI Demo 实现与验收报告》](D:/pm/旅伴AI_Demo实现与验收报告.md)：前端、FastAPI、本机 JSON、规则推荐/排程/重规划和预置解说均已完成；API 契约已允许 `sourceMode=llm|preset`。没有任何真实模型请求已经通过的证据。
 
-当前 `POST /api/guide` 将 `GUIDE_MODE=llm` 仅标记为降级，仍返回预置文本；`backend/run.ps1` 又固定覆盖为 preset。因此运行中的应用实际不调用模型。执行环境里发现 DeepSeek API 凭据变量可用，但凭据值不读取、不写文件、不输出，也不提交 Git。
+当前 `POST /api/guide` 将 `GUIDE_MODE=llm` 仅标记为降级，仍返回预置文本；当时的 `backend/run.ps1` 又固定覆盖为 preset。因此运行中的应用实际不调用模型。执行环境里发现 DeepSeek API 凭据变量可用，但凭据值不读取、不写文件、不输出，也不提交 Git。
 
 ## 2. 本阶段目标、边界与主计划关系
 
@@ -46,7 +46,7 @@ flowchart LR
 |---|---|---|
 | `backend/app/guide.py` | 新增：构造严格资料边界提示词、发送受限请求、检查响应文本 | 解说是唯一需要生成式语言能力的环节；隔离网络和提示词，避免把模型混入路线规则 |
 | `backend/app/main.py` | 修改：模式开关、返回真实来源标记；异常时预置回退 | 保持既有 API 返回形状与契约，前端不需新增接口 |
-| `backend/run.ps1`、`.env.example` | 修改：默认仍为 preset，但不覆盖 operator 配置；列明模型环境变量 | 无凭据仍可正常启动，LLM 模式有明确且可复现的开关 |
+| `backend/run.ps1`、`.env.example`、本机 `backend/.env` | 修改：启动时加载被忽略的本机配置；示例模板列明环境变量 | 无凭据仍可正常启动，LLM 模式有明确且可复现的开关 |
 | `frontend/src/App.vue` | 修改：发送前提示云端生成及发送字段，返回后标出 AI/预置模式 | 对用户说明何时会把有限上下文发送到第三方，以及结果并非核验后的旅游事实 |
 | 主验收报告 | 更新现有报告第 10 节，记录实测成败及费用/范围边界 | 保持只有一份用户主报告 |
 
@@ -103,3 +103,7 @@ flowchart LR
 - 脱敏响应和运行日志保存在 `evidence/llm-trial/`。其中没有 API key；官方 402 说明见 [DeepSeek 中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。
 
 阶段状态：**代码与回退已交付，真实模型输出待账号有可用余额后再验收**。恢复 WP5.4 前需确认供应商账户余额可用；无需改路线算法或扩大数据范围。
+
+### 配置交接补充（2026-11-21）
+
+已新增本机私有配置文件 `backend/.env`，预填 `GUIDE_MODE=llm`、DeepSeek 地址和模型名，`LLM_API_KEY` 留空；`backend/run.ps1` 现在通过 Uvicorn `--env-file` 自动加载它。`.gitignore` 已忽略 `.env`，真实密钥不会提交；`.env.example` 仍是无密钥模板。用户填入可用 API Key 后重启后端即可重试。
