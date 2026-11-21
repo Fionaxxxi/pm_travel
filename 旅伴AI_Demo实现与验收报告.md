@@ -275,6 +275,12 @@ else:
 
 实际短解说调用被供应商拒绝，后端安全日志读到 HTTP 403、错误代码 `insufficient_quota`；用户页面仍收到 HTTP 200 和预置解说，`sourceMode=preset`、`degraded=true`，没有真实模型正文。阿里云文档建议按服务开通、模型访问权限、Key 权限范围和额度排查：[错误码说明](https://help.aliyun.com/zh/model-studio/error-code-start)。本轮只能确认供应商拒绝请求，无法仅凭状态码断定账户余额或权限的具体原因；没有继续请求。诊断文件为 [configured-model-diagnostic.txt](D:/pm/evidence/llm-trial/configured-model-diagnostic.txt)。试用服务已停止，`backend/.env` 保留在本机并被 Git 忽略。确认控制台配置后，可运行 [run.ps1](D:/pm/backend/run.ps1) 复试。
 
+#### 配置修正后成功调用（2026-11-21）
+
+用户再次更新本机 `.env` 为阿里云 Model Studio `deepseek-v4-pro-0813` 后，真实 `POST /api/guide` 返回 `sourceMode=llm`、`degraded=false`，独克宗古城的简短解说由模型生成。前端首页返回 HTTP 200；没有做浏览器视觉检查或截图。代码按官方兼容方式把 DeepSeek V4 请求改为顶层 `enable_thinking=false`，不混用直连 API 的 `thinking` 字段。[官方接口文档](https://help.aliyun.com/en/model-studio/deepseek-api)说明该模型支持该思考模式开关。5 项解说专项测试通过。输出证据：[reconfigured-model-response.json](D:/pm/evidence/llm-trial/reconfigured-model-response.json)、[测试结果](D:/pm/evidence/llm-trial/reconfigured-guide-tests.txt)。
+
+本机试用前端目前运行于 `http://127.0.0.1:5192/`，后端为 8032，使用隔离种子数据；进入「我的旅程」→景点卡片→「地点解说」可查看生成效果。模型文字标为 AI 生成，但不代表旅游事实已核验。此前 DeepSeek 402 与 Qwen 403 的失败证据继续保留。全量后端回归上次停在健康检查且无输出，本轮只复测解说专项用例，没有宣称全量通过。
+
 ### 10.1 目标与实现前后
 
 本阶段依照当前权威计划 [《旅伴 AI 功能演示 Demo 实现计划》](D:/pm/旅伴AI_MVP实现计划.md) V2.2 执行。旧的完整 MVP 计划已由 V2.2 收缩取代。本阶段目标是让用户可在一台电脑上连续操作“设置偏好—看推荐—生成路线—途中变化—接受或放弃调整—听/看解说—反馈—再次推荐”的可运行演示；不是上线级服务，也不是接入真实大模型的产品。

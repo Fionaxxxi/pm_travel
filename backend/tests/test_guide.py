@@ -66,3 +66,11 @@ def test_qwen4_max_payload_uses_supported_thinking_settings() -> None:
     assert payload["max_tokens"] == 2048
 
 
+def test_model_studio_deepseek_v4_payload_uses_enable_thinking() -> None:
+    payload = guide._request_payload("deepseek-v4-pro-0813", {"name": "古城"}, "history", "short", 30)
+
+    assert payload["enable_thinking"] is False
+    assert "thinking" not in payload
+    assert payload["max_tokens"] == 520
+
+

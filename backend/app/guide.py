@@ -77,7 +77,9 @@ async def generate(attraction: dict[str, Any], interest_tag: str, depth: str, mi
 
 
 def _request_payload(model: str, attraction: dict[str, Any], interest_tag: str, depth: str, minutes: int) -> dict[str, Any]:
-    is_qwen4_max = model.lower().startswith("qwen4-max")
+    model_name = model.lower()
+    is_qwen4_max = model_name.startswith("qwen4-max")
+    is_aliyun_deepseek_v4 = model_name.startswith("deepseek-v4-")
     payload: dict[str, Any] = {
         "model": model,
         "messages": _messages(attraction, INTEREST_NAMES.get(interest_tag, interest_tag), depth, minutes),
@@ -88,7 +90,10 @@ def _request_payload(model: str, attraction: dict[str, Any], interest_tag: str, 
     if is_qwen4_max:
         # Qwen4-Max on Model Studio requires thinking to remain enabled.
         payload["enable_thinking"] = True
-    elif "deepseek" in model.lower():
+    elif is_aliyun_deepseek_v4:
+        # Model Studio's DeepSeek V4 series uses enable_thinking, not DeepSeek's direct-API field.
+        payload["enable_thinking"] = False
+    elif "deepseek" in model_name:
         payload["thinking"] = {"type": "disabled"}
     return payload
 

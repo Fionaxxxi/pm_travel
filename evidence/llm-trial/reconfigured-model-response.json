@@ -1,0 +1,21 @@
+{
+  "testedAt": "2026-11-21T15:33:09",
+  "provider": "Alibaba Cloud Model Studio",
+  "model": "deepseek-v4-pro-0813",
+  "endpoint": "POST /api/guide",
+  "attractionId": "a01",
+  "status": "HTTP 200",
+  "sourceMode": "llm",
+  "degraded": false,
+  "notice": "AI 生成内容（deepseek-v4-pro-0813），仅依据景点资料整理；资料与事实尚未独立核验。",
+  "text": "沿着石板路走进独克宗古城，脚下是岁月磨亮的石头，两旁是藏式民居与安静的街巷。这里保留着传统聚落的空间格局，可以慢慢观察当地人的日常生活。古城不收门票，建议停留约八十分钟，若时间有限，半小时也能感受它的历史氛围。",
+  "sources": [
+    {
+      "title": "用户原型内置景点资料",
+      "url": null,
+      "note": "摘自《旅伴AI-表单与曲线路线版.html》；原型未注明外部核验来源，开放时间、坐标与费用出行前请再次确认。"
+    }
+  ],
+  "apiKeyRecorded": false,
+  "frontendStatus": 200
+}

@@ -96,13 +96,13 @@ flowchart LR
 ## 执行结果（2026-11-21）
 
 - WP5.1—WP5.3 已实现：DeepSeek/OpenAI 兼容 API 的配置、独立解说调用、失败回退、发送范围提示均已接入；默认仍为 preset，密钥只从进程环境读取。
-- A2（调用层 mock 成功）、A3（HTTP 503 回退信号）、无密钥配置路径和 Qwen payload 参数的 4 项专项测试通过；生产构建和 312 项契约结构检查通过。首次写成异步 pytest 用例时，因项目环境未安装 pytest-asyncio 而跳过；改为同步 HTTP 边界测试后通过。
-- WP5.4/A5 **未通过**：两次短 DeepSeek 请求均返回 HTTP 402。官方错误码将 402 定义为“余额不足”；本阶段不充值，也不继续发起模型请求。因此没有真实 AI 解说正文，不能声称已完成真实模型生成验收。
-- 8031/5191 已被占用，试用临时使用 8032/5192 和隔离数据目录。真实试用服务在 402 后已停止，避免应用以后意外发起模型调用；项目原有默认地址已恢复为 8031。
-- 全量既有后端回归在当前 Conda 环境启动 `test_health_and_contract_shape` 后持续无输出，手动停止；这是未完成的验证，不能引用之前阶段的 19 项通过结果代替本阶段复测。新加的三个解说边界用例单独通过。
+- A2（调用层 mock 成功）、A3（HTTP 503 回退信号）、无密钥配置、Qwen payload 和 Model Studio DeepSeek V4 payload 的 5 项专项测试通过；生产构建和 312 项契约结构检查通过。首次写成异步 pytest 用例时，因项目环境未安装 pytest-asyncio 而跳过；改为同步 HTTP 边界测试后通过。
+- WP5.4/A5 最终**通过**：早期 DeepSeek 请求返回 HTTP 402、Qwen 请求返回 HTTP 403/`insufficient_quota`，均有保留的预置回退记录。用户更新配置后，Model Studio `deepseek-v4-pro-0813` 真实请求返回 `sourceMode=llm`、`degraded=false` 和非空解说，证明真实生成链路通过。旧失败记录保留，不覆盖。
+- 默认端口 8031/5191 被占用，试用使用 8032/5192 和隔离数据目录。此前试用进程已停止；本次成功后重新启动同一隔离实例，目前保留运行供项目所有者从 `http://127.0.0.1:5192/` 查看。
+- 全量既有后端回归曾在 `test_health_and_contract_shape` 停滞并被手动中断；本次通过的是 5 项解说专项测试，不把之前阶段 19 项结果冒充为本阶段全量复测。全量回归仍是一项未完成检查。
 - 脱敏响应和运行日志保存在 `evidence/llm-trial/`。其中没有 API key；官方 402 说明见 [DeepSeek 中文错误码](https://api-docs.deepseek.com/zh-cn/quick_start/error_codes/)。
 
-阶段状态：**代码与回退已交付，真实模型输出仍未验收**。首次 DeepSeek 请求返回 HTTP 402；用户之后配置阿里云 Model Studio `qwen4-max`，实接诊断返回 HTTP 403、代码 `insufficient_quota`，仍然回退到 preset。恢复 WP5.4 前需先在供应商控制台确认模型/Key 权限、服务状态及额度；无需改路线算法或扩大数据范围。
+阶段状态：**真实模型解说已成功验收**。用户当前配置为阿里云 Model Studio `deepseek-v4-pro-0813`，一条真实短解说生成通过；推荐和路线仍由本机规则控制。历史失败调用与当前成功结果分别保存。全量后端回归停滞项、模型文本事实核查与浏览器视觉观察仍未完成。
 
 ### 配置交接补充（2026-11-21）
 
@@ -111,3 +111,9 @@ flowchart LR
 ### 用户配置后复试（2026-11-21）
 
 用户已配置阿里云 Model Studio `qwen4-max`。按其官方接口要求，生成请求使用 `enable_thinking=true`，不发送 DeepSeek 专属 `thinking` 字段；对应 payload 单元测试通过。实接请求的业务接口返回 200，但供应商返回 HTTP 403 / `insufficient_quota`，因此仍没有 AI 正文。官方建议检查服务开通、模型/Key 权限和额度：[Model Studio 错误码](https://help.aliyun.com/zh/model-studio/error-code-start)。没有继续请求；隔离服务已停止，用户 `.env` 保留且仍被 Git 忽略。脱敏诊断见 `evidence/llm-trial/configured-model-diagnostic.txt`。
+
+### 配置修正后成功调用（2026-11-21）
+
+用户再次更新本机 `.env` 为 `deepseek-v4-pro-0813`。代码按 Model Studio DeepSeek V4 兼容方式发送顶层 `enable_thinking=false`，不发送 DeepSeek 直连 API 专用的 `thinking` 对象；5 项专项测试通过。真实 `/api/guide` 请求返回 `sourceMode=llm`、`degraded=false`，正文非空；前端首页 HTTP 200。脱敏响应见 `evidence/llm-trial/reconfigured-model-response.json`，专项测试输出见 `reconfigured-guide-tests.txt`。官方接口说明：[阿里云 DeepSeek API](https://help.aliyun.com/en/model-studio/deepseek-api)。
+
+试用前端目前在 `http://127.0.0.1:5192/`，进入「我的旅程」后从景点卡片打开「地点解说」即可查看；后端使用隔离数据在 8032 端口运行，当前配置仍留在被 Git 忽略的本机 `.env`。模型生成内容仅基于现有景点资料，具体事实仍需独立核验。
